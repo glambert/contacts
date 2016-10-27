@@ -8,11 +8,11 @@ For now API is mocked with an initial state inside the Redux store, and
 all operations are applied on the client, not the server. This section
 outlines what the app expects. 
 
-**The API must be RESTful and have the following endpoints and return format:**
+**The API must be RESTful, have the following endpoints, and returns JSON:**
 
 ### **GET** `/contacts`
 
-Returns a list of all available contacts
+Returns a list of all available contacts:
   
 ```
 [
@@ -22,8 +22,8 @@ Returns a list of all available contacts
     "jobTitle": "Senior Front-End Developer",
     "address": "2675 Basile-Routhier, Laval, QC. Canada",
     "email": "glambertmtl@gmail.com",
-    "picture": "...",
-    "note": "Building the Web since 1996, with a passion for consistency in UX, information, teamwork and workflow. Dreamer, drummer, all-around nice guy."
+    "picture": "http://placehold.it/200x200&text=Picture",
+    "note": "Building the Web since 1996"
   },
   ...
 ]
@@ -31,7 +31,7 @@ Returns a list of all available contacts
   
 ### **GET** `/contacts/{id}`
 
-Returns a contact by ID
+Returns a contact by ID:
 
 ```
 {
@@ -40,8 +40,8 @@ Returns a contact by ID
   "jobTitle": "Senior Front-End Developer",
   "address": "2675 Basile-Routhier, Laval, QC. Canada",
   "email": "glambertmtl@gmail.com",
-  "picture": "...",
-  "note": "Building the Web since 1996, with a passion for consistency in UX, information, teamwork and workflow. Dreamer, drummer, all-around nice guy."
+  "picture": "http://placehold.it/200x200&text=Picture",
+  "note": "Building the Web since 1996"
 }
 ```
 
@@ -56,21 +56,21 @@ Creates a contact, the following parameters are expected:
 - picture
 - note
 
-Should return same data format as **GET** `/contacts/{id}`.
+Must return same data format as **GET** `/contacts/{id}`.
 
 ### **PUT** `/contacts/{id}`
 
 Edits a contact by sending the entire data back to the server, the following 
 parameters are expected:
 
-- name
+- name (required)
 - jobTitle
 - address
 - email
 - picture
 - note
 
-Should return same data format as **GET** `/contacts/{id}`.
+Must return same data format as **GET** `/contacts/{id}`.
 
 ### **DELETE** `/contacts/{id}`
 
@@ -120,6 +120,7 @@ npm run build
 
 - [ ] Use real API, consider all possible cases (errors, timeouts etc.)
 - [ ] Fine-tune UI responsiveness & UX
+- [ ] Add inline form validation
 - [ ] Use CSS modules to encapsulate components-specific styles
 - [ ] Add routing for direct access to contacts
 - [ ] Save app state in storage
