@@ -8,7 +8,7 @@ For now API is mocked with an initial state inside the Redux store, and
 all operations are applied on the client, not the server. This section
 outlines what the app expects. 
 
-**The API must be RESTful, have the following endpoints, and returns JSON:**
+**The API must be RESTful, have the following endpoints, and returns data in JSON format**
 
 ### **GET** `/contacts`
 
