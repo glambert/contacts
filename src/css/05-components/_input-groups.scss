@@ -1,0 +1,50 @@
+// ----------------------------------------------------------------------------
+// Components - Input Groups
+// This was taken directly from Bootstrap 3, may need some fine-tuning
+// https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_input-groups.scss
+// ----------------------------------------------------------------------------
+
+
+// Base elements
+// ------------------------------------
+
+.input-group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+}
+
+.input-group__input {
+  position: relative;
+  float: left;
+  width: 100%;
+  border: 1px solid $color-border;
+  border-right: 0;
+  margin-bottom: 0;
+  height: vr-rem(7);
+}
+
+
+// Display as table-cell
+// ------------------------------------
+
+.input-group__button-wrap,
+.input-group__input {
+  display: table-cell;
+
+  &:not(:first-child):not(:last-child) {
+    border-radius: 0;
+  }
+}
+
+// Addon and addon wrapper for buttons
+.input-group__button-wrap {
+  position: relative;
+  width: 1%;
+  vertical-align: middle;
+  white-space: nowrap;
+
+  > * {
+    height: vr-rem(7);
+  }
+}

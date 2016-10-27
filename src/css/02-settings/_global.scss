@@ -1,0 +1,149 @@
+// ----------------------------------------------------------------------------
+// Settings
+// ----------------------------------------------------------------------------
+
+
+// Globals
+// ------------------------------------
+
+$global-border-radius:       4px !default;
+$global-border-box:          true !default;
+$global-transition-time:     200ms !default;
+
+// Use to force decimal rounding on specific cases,
+// overriding Sass's `precision` setting.
+// Used with
+$global-decimal-round:       4 !default;
+
+
+// Base sizes
+// ------------------------------------
+
+// NOTE: DON'T TOUCH, used as base for rem values,
+// we have to convert this in a constant eventually
+$root-font-size:             16px;
+
+// The base font size, applied to body and transformed in a rem unit
+//
+$base-font-size:             16px !default;
+
+// Set baseline grid size for line heights and spacing vertical rhythm
+// See vr-* functions in tools/_functions.scss
+$base-size:                  6px !default;
+
+// Line height based on $base-size for vertical rhythm,
+// change multiplier to increase or decrease
+$base-line-height:           $base-size * 4 !default;
+
+// Line height ratio for unitless value (i.e: 24px / 16px = 1.5)
+$base-line-height-ratio:     $base-line-height / $base-font-size !default;
+
+// Debug flag for baseline grid overlay
+$base-grid-debug:            false !default;
+
+
+// Fonts
+// ------------------------------------
+
+// Families
+$font-family-sans-serif:     'Source Sans Pro', sans-serif;
+$font-family-serif:          Georgia, 'Times New Roman', Times, serif !default;
+$font-family-monospace:      'Source Sans Pro', Menlo, Monaco, Consolas, 'Courier New', monospace !default;
+$font-family-base:           $font-family-sans-serif !default;
+
+// Weights
+$font-weight-bold:           700 !default;
+$font-weight-medium:         600 !default;
+$font-weight-normal:         400 !default;
+$font-weight-light:          300 !default;
+
+// Base
+$font-weight-base:           $font-weight-light !default;
+
+
+// Breakpoints
+// ------------------------------------
+
+// Set breakpoints, min-width
+$bp-tn:                      320px !default;
+$bp-xs:                      480px !default;
+$bp-sm:                      768px !default;
+$bp-md:                      980px !default;
+$bp-lg:                      1140px !default;
+$bp-xl:                      1280px !default;
+
+// So media queries don't overlap when required, provide a maximum flexibility
+$bp-tn-max:                  ($bp-xs - 1) !default;
+$bp-xs-max:                  ($bp-sm - 1) !default;
+$bp-sm-max:                  ($bp-md - 1) !default;
+$bp-md-max:                  ($bp-lg - 1) !default;
+$bp-lg-max:                  ($bp-xl - 1) !default;
+
+// Breakpoints map, with shorthand identifier
+$bp-map: (
+  ('tn', $bp-tn),
+  ('xs', $bp-xs),
+  ('sm', $bp-sm),
+  ('md', $bp-md),
+  ('lg', $bp-lg),
+  ('xl', $bp-xl),
+);
+
+
+// Gutters
+// ------------------------------------
+
+// Global gutter width based on vertical rhythm for consistency
+$gutter-width:               vr-rem(3) !default;
+
+
+// Grid object settings (objects/_grid.scss)
+// ------------------------------------
+
+// Container (in REM)
+$grid-container:             to-rem($bp-xl);
+$grid-container-fixed:       false;
+$grid-set-border-box:        false;
+$grid-gutter-width:          $gutter-width;
+$grid-max-width:             $grid-container;
+$grid-output-helpers:        true;
+$grid-output-golden:         true;
+$grid-breakpoints:           $bp-map;
+
+
+// Modular Scale
+// https://github.com/modularscale/modularscale-sass
+// ------------------------------------
+
+// Set modular scale base and ratio using modular-scale
+// https://github.com/Team-Sass/modular-scale
+// http://type-scale.com/
+$ms-base:                    to-rem($base-font-size);
+$ms-ratio:                   $minor-third;
+
+// Responsive scales, mobile-first based breakpoints (second value for $ms-range var)
+// https://github.com/modularscale/modularscale-sass#responsive-scales
+// http://madebymike.com.au/writing/precise-control-responsive-typography/
+$ms-fluid: false;
+$ms-range:
+  $major-second to-em($bp-tn, $root-font-size), // >= 320px (> 0 actually, ms adds this value by default)
+  $minor-third  to-em($bp-sm, $root-font-size); // >= 768px
+
+
+// Breakpoint
+// https://github.com/at-import/breakpoint
+// ------------------------------------
+
+@include breakpoint-set('default media', screen);
+@include breakpoint-set('to ems', true);
+
+
+// Susy
+// https://github.com/ericam/susy
+// ------------------------------------
+
+$susy: (
+  'container': $grid-container,
+  'global-box-sizing': 'border-box',
+  'gutters': 0
+);

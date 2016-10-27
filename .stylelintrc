@@ -1,0 +1,16 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "at-rule-empty-line-before": ["always", {
+      "except": [
+        "blockless-after-same-name-blockless",
+        "first-nested"
+      ],
+      "ignore": ["after-comment"],
+      "ignoreAtRules": ["include", "extend", "if", "else", "elseif", "for", "return"]
+    }],
+    "declaration-block-single-line-max-declarations": 2,
+    "max-empty-lines": 2,
+    "max-nesting-depth": 3
+  }
+}

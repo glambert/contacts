@@ -1,0 +1,18 @@
+// ----------------------------------------------------------------------------
+// Elements - Links
+// ----------------------------------------------------------------------------
+
+
+// General links styles, set hover color with darken() function.
+// ------------------------------------
+
+a {
+  color: $color-link;
+  text-decoration: none;
+
+  &:hover {
+    outline: 0;
+    color: darken($color-link, 18%);
+    transition: all $global-transition-time;
+  }
+}

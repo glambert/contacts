@@ -1,0 +1,30 @@
+// ----------------------------------------------------------------------------
+// Main bootstrap stylesheet
+// Strongly based on [ITCSS](http://itcss.io)
+// Note that categories' import order must remain intact, since it follows
+// the inverted triangle concept of ITCSS (low to high specificity)
+// ----------------------------------------------------------------------------
+
+// Settings & Tools
+@import 'core';
+
+// Generic
+@import '03-generic/normalize';
+@import '03-generic/reset';
+
+// Elements
+@import '04-elements/main';
+@import '04-elements/type';
+@import '04-elements/images';
+
+// Components
+@import '05-components/alerts';
+@import '05-components/button-groups';
+@import '05-components/buttons';
+@import '05-components/flex-embed';
+@import '05-components/forms';
+@import '05-components/grid';
+@import '05-components/input-groups';
+
+// Utilities
+@import '06-utilities/all';

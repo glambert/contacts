@@ -1,0 +1,30 @@
+{
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "strict": [2, "never"],
+    "indent": [2, 2, {"SwitchCase": 1}],
+    "quotes": [2, "single"],
+    "jsx-quotes": [2, "prefer-double"],
+    "eol-last": 1,
+    "no-unused-vars": 0,
+    "no-trailing-spaces": 1,
+    "no-undef": 2,
+    "no-alert": 0,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/react-in-jsx-scope": 0
+  },
+  "plugins": [
+    "react"
+  ]
+}

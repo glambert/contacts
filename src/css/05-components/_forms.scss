@@ -1,0 +1,269 @@
+// ----------------------------------------------------------------------------
+// Components - Forms
+// ----------------------------------------------------------------------------
+
+// Settings
+// ------------------------------------
+
+$form-namespace: 'form' !default;
+
+
+// Normalize form elements
+// Taken from Bootstrap 3 - https://github.com/twbs/bootstrap
+// ------------------------------------
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  // Chrome and Firefox set a `min-width: min-content;` on fieldsets,
+  // so we reset that to ensure it behaves more like a standard block element.
+  // See https://github.com/twbs/bootstrap/issues/12359.
+  min-width: 0;
+}
+
+// Override content-box in Normalize (* isn't specific enough)
+input[type="search"] {
+  box-sizing: border-box;
+}
+
+// Position radios and checkboxes better
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 5px 0 0;
+  line-height: normal;
+}
+
+// Set the height of file controls to match text inputs
+input[type="file"] {
+  display: block;
+}
+
+// Make range inputs behave like textual form controls
+input[type="range"] {
+  display: block;
+  width: 100%;
+}
+
+// Make multiple select elements height not fixed
+select[multiple],
+select[size] {
+  height: auto;
+}
+
+// Focus for file, radio, and checkbox
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+  @include tab-focus;
+}
+
+
+// Control for fluid width
+// ------------------------------------
+
+.#{$form-namespace}-control,
+%#{$form-namespace}-control {
+  display: block;
+  width: 100%;
+  // Make inputs at least the height of their button counterpart
+  // (base line-height + padding + border)
+  height: vr-rem(4) + $base-line-height-ratio - vr-rem(1);
+  // Offset to make up for border size
+  padding: vr-rem(1.5, -1) to-rem(9px);
+  border: 1px solid $color-border;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: $global-border-radius;
+  background-color: transparent;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  // @include placeholder();
+
+  &:focus {
+    border-color: $color-secondary;
+    outline: none;
+  }
+
+  // Disabled and read-only inputs
+  //
+  // HTML5 says that controls under a fieldset > legend:first-child won't be
+  // disabled if the fieldset is disabled. Due to implementation difficulty, we
+  // don't honor that edge case; we style them as disabled anyway.
+  &:disabled,
+  &[readonly],
+  fieldset[disabled] & {
+    background-color: #eee;
+    color: $color-text-dim;
+    // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
+    opacity: 1;
+  }
+
+  &[disabled],
+  fieldset[disabled] & {
+    cursor: not-allowed;
+  }
+}
+
+// Reset height for `textarea`s
+textarea.#{$form-namespace}-control {
+  height: auto;
+}
+
+
+// Group for spacing
+// ------------------------------------
+
+.#{$form-namespace}-group {
+  margin-bottom: vr-rem(3);
+  // When used as column in row, use same gutter as bottom space for harmony
+  // Do not apply to first-child to keep aligned with overall grid
+  .row > &:not(:first-child) {
+    // padding-left: vr-rem(3);
+  }
+}
+
+
+// Labels
+// ------------------------------------
+
+.#{$form-namespace}-label,
+%#{$form-namespace}-label {
+  display: block;
+  margin-bottom: vr-rem(1);
+  color: $color-text-light;
+  font-weight: $font-weight-normal;
+}
+
+// Wide modifier, `class="form-label form-label--wide"`
+.#{$form-namespace}-label--wide {
+  margin-bottom: vr-rem(2);
+  padding-bottom: vr-rem(1);
+  border-bottom: 1px solid $color-border;
+}
+
+
+// Notes
+// ------------------------------------
+
+.#{$form-namespace}-note {
+  display: block;
+  margin-bottom: vr-rem(1);
+  color: $color-text-dim;
+}
+
+
+// Checkboxes and radios
+// Indent the labels to position radios/checkboxes as hanging controls.
+// ------------------------------------
+
+.#{$form-namespace}-radio,
+.#{$form-namespace}-checkbox {
+  display: block;
+  min-height: $base-line-height;
+  margin-top: vr-rem(1);
+  margin-bottom: vr-rem(1);
+  padding-left: 20px;
+
+  label {
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+
+    &.is-disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.#{$form-namespace}-radio input[type="radio"],
+.#{$form-namespace}-radio-inline input[type="radio"],
+.#{$form-namespace}-checkbox input[type="checkbox"],
+.#{$form-namespace}-checkbox-inline input[type="checkbox"] {
+  float: left;
+  margin-left: -20px;
+}
+
+// Move up sibling radios or checkboxes for tighter spacing
+.#{$form-namespace}-radio + .#{$form-namespace}-radio,
+.#{$form-namespace}-checkbox + .#{$form-namespace}-checkbox {
+  margin-top: -5px;
+}
+
+.#{$form-namespace}-radio-inline,
+.#{$form-namespace}-checkbox-inline {
+  display: inline-block;
+  padding-left: 20px;
+  margin-bottom: 0;
+  vertical-align: middle;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+// space out consecutive inline controls
+.#{$form-namespace}-radio-inline + .#{$form-namespace}-radio-inline,
+.#{$form-namespace}-checkbox-inline + .#{$form-namespace}-checkbox-inline {
+  margin-top: 0;
+  margin-left: 10px;
+}
+
+
+// Horizontal form variant
+// ------------------------------------
+
+.#{$form-namespace}-horizontal {
+
+  // Add top space for vertical spacing harmony
+  .#{$form-namespace}-label,
+  .#{$form-namespace}-static,
+  .#{$form-namespace}-radio-inline,
+  .#{$form-namespace}-checkbox-inline {
+    padding-top: vr-rem(1, ($base-size / 2));
+  }
+
+  // Reset spacing and right align labels, but scope to media queries so that
+  // labels on narrow viewports stack the same as a default form example.
+  @include breakpoint($bp-sm) {
+    .#{$form-namespace}-label:not(.#{$form-namespace}-label--wide) {
+      text-align: right;
+    }
+  }
+}
+
+
+// Inline forms variant
+// Make forms appear inline(-block) by adding the `form-inline` class.
+// ------------------------------------
+
+.#{$form-namespace}-inline {
+
+  // Inline-block all the things for "inline"
+  .#{$form-namespace}-group {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+
+  // In navbar-form, allow folks to *not* use `form-group`
+  .#{$form-namespace}-control {
+    display: inline-block;
+    width: auto; // Prevent labels from stacking above inputs in `form-group`
+    vertical-align: middle;
+  }
+
+  // Remove default margin on radios/checkboxes that were used for stacking, and
+  // then undo the floating of radios and checkboxes to match (which also avoids
+  // a bug in WebKit: https://github.com/twbs/bootstrap/issues/1969).
+  .#{$form-namespace}-radio,
+  .#{$form-namespace}-checkbox {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    vertical-align: middle;
+  }
+
+  .#{$form-namespace}-radio input[type="radio"],
+  .#{$form-namespace}-checkbox input[type="checkbox"] {
+    float: none;
+    margin-left: 0;
+  }
+}

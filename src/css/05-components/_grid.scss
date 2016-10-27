@@ -1,0 +1,406 @@
+// ----------------------------------------------------------------------------
+// Components - Grid
+// @author Guillaume Lambert <falzhobel@gmail.com>
+//
+// A simple, libsass-compatible & mobile-first responsive grid system.
+// Use for quickly building grid-based content.
+//
+// For more fine-grained control, use [Susy](http://susy.oddbird.net/) instead
+// Both this grid and Susy can live alongside!
+//
+// Inspirations:
+// [Foundation 5 grid system](http://foundation.zurb.com)
+// [Bootstrap 3 grid system](http://getbootstrap.com)
+// [Gridism](https://github.com/cobyism/gridism)
+//
+// Requires the border-box box model.
+// Just set $grid-set-border-box to false if you already have it in your setup.
+// [box-sizing ftw!](http://www.paulirish.com/2012/box-sizing-border-box-ftw/)
+// ----------------------------------------------------------------------------
+
+
+// Settings
+// TODO: describe each variables carefully with example
+// ------------------------------------
+
+// Set grid type, even|division
+$grid-type:                  'division' !default;
+
+// Global
+$grid-set-border-box:        true !default;
+$grid-namespace:             '' !default;
+$grid-col-namespace:         '' !default;
+
+// Columns and width
+$grid-columns:               12 !default;
+$grid-gutter-width:          20px !default;
+$grid-max-width:             1200px !default;
+
+// Include push, pull and offset helpers?
+$grid-output-helpers:        false !default;
+
+// Include golden ratio helpers for division-based grid?
+$grid-output-golden:         false !default;
+
+// Include breakpoints variants for columns?
+$grid-output-breakpoints:    true !default;
+
+// Set default mobile-first (min-width) breakpoints list
+// (name, abbreviation, value)
+$grid-breakpoints: (
+  (sm, 480px),
+  (md, 768px),
+  (lg, 960px),
+) !default;
+
+// Set double gutter starting from which breakpoint? Set to false by default
+$grid-double-gutter-bp:      false !default;
+
+// Fixed (`width`) or fluid (`max-width`) containers
+$grid-container-fixed:       false !default;
+
+// DON'T TOUCH, used to make sure em-based breakpoints
+// will be based on 100% base size.
+$grid-em-base: $root-font-size;
+
+
+// Set global border-box
+// ------------------------------------
+
+@if ($grid-set-border-box) {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+
+// Columns width calculate function
+// ------------------------------------
+
+@function col-width($column, $total-columns) {
+  @return percentage(($column / $total-columns));
+}
+
+@function grid-default($name: '') {
+  @if ($name == '' and $grid-col-namespace == '') {
+    $name: 'col-';
+  }
+
+  @return $name;
+}
+
+
+// Container placeholder selector
+// ------------------------------------
+
+%#{$grid-namespace}container {
+  max-width: $grid-max-width;
+  margin-left: auto;
+  margin-right: auto;
+
+  @if ($grid-gutter-width > 0) {
+    padding-left: $grid-gutter-width;
+    padding-right: $grid-gutter-width;
+  }
+
+  @if ($grid-container-fixed) {
+    @each $bp-abbr, $bp-value in $grid-breakpoints {
+      @include breakpoint($bp-value) {
+        width: $bp-value;
+      }
+    }
+  }
+}
+
+
+// Row placeholder selector
+// ------------------------------------
+
+%#{$grid-namespace}row {
+  list-style: none;
+  @if ($grid-gutter-width > 0) {
+    margin-left: -$grid-gutter-width;
+  }
+
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// Columns placeholder selector
+// ------------------------------------
+
+// Base style for all columns widths
+// 1. Set full width by default, as a default block element behaviour
+// 2. `float` is set by default so columns always behave the same and create a new block format context
+// 3. Prevent columns from collapsing when empty
+%#{$grid-namespace}col-item {
+  width: 100%; // [1]
+  float: left; // [2]
+  min-height: 1px; // [3]
+
+  @if ($grid-gutter-width > 0) {
+    padding-left: $grid-gutter-width;
+  }
+}
+
+
+// Relative positionning placeholder selector
+// 1. Push and pull are moved with positionning, set to relative
+// ------------------------------------
+
+%#{$grid-namespace}relative {
+  position: relative; // [1]
+}
+
+// Mixins, for creating actual col classes
+// ------------------------------------
+
+@mixin make-columns($name: '') {
+  // If $name and $grid-col-namespace are empty, set at least col- for default cols
+  $name: grid-default($name);
+  @for $index from 1 through $grid-columns {
+    .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$index} {
+      width: col-width($index, $grid-columns);
+    }
+  }
+}
+
+@mixin make-columns-push($name: '') {
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}push-0 {
+    left: auto;
+  }
+  @for $index from 1 through $grid-columns {
+    .#{$grid-namespace}#{$grid-col-namespace}#{$name}push-#{$index} {
+      left: col-width($index, $grid-columns);
+    }
+  }
+}
+
+@mixin make-columns-pull($name: '') {
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}pull-0 {
+    right: auto;
+  }
+  @for $index from 1 through $grid-columns {
+    .#{$grid-namespace}#{$grid-col-namespace}#{$name}pull-#{$index} {
+      right: col-width($index, $grid-columns);
+    }
+  }
+}
+
+@mixin make-columns-offset($name: '') {
+  @for $index from 1 through $grid-columns {
+    .#{$grid-namespace}#{$grid-col-namespace}#{$name}offset-#{$index} {
+      margin-left: col-width($index, $grid-columns);
+    }
+  }
+}
+
+// Make divison based columns, push, pull or offsets
+// $type can be width|push|pull|offset
+@mixin make-columns-division($name: '', $type: 'width') {
+
+  $name: grid-default($name);
+
+  // Default value
+  $type-namespace: '';
+  $property: width;
+
+  // Set class and property on type
+  @if ($type == 'width') {
+    $type-namespace: '';
+    $property: width;
+  }
+  @elseif ($type == 'push') {
+    $type-namespace: 'push-';
+    $property: left;
+  }
+  @elseif ($type == 'pull') {
+    $type-namespace: 'pull-';
+    $property: right;
+  }
+  @elseif ($type == 'offset') {
+    $type-namespace: 'offset-';
+    $property: margin-left;
+  }
+  @else {
+    @warn 'No valid type defined for columns division mixin';
+  }
+
+  // Whole
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}1-1 { #{$property}: col-width(1, 1); }
+
+  // Halves
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}1-2,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}2-4,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}3-6,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}4-8,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}5-10 { #{$property}: col-width(1, 2); }
+
+  // Thirds
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}1-3,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}2-6 { #{$property}: col-width(1, 3); }
+
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}2-3,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}4-6 { #{$property}: col-width(2, 3); }
+
+  // Quarters
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}1-4,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}2-8 { #{$property}: col-width(1, 4); }
+
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}3-4,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}6-8 { #{$property}: col-width(3, 4); }
+
+  // Fifths
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}1-5,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}5-10 { #{$property}: col-width(1, 5); }
+
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}2-5,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}4-10 { #{$property}: col-width(2, 5); }
+
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}3-5,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}6-10 { #{$property}: col-width(3, 5); }
+
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}4-5,
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}8-10 { #{$property}: col-width(4, 5); }
+
+  // Sixths
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}1-6 { #{$property}: col-width(1, 6); }
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}5-6 { #{$property}: col-width(5, 6); }
+
+  // Eights
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}1-8 { #{$property}: col-width(1, 8); }
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}3-8 { #{$property}: col-width(3, 8); }
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}5-8 { #{$property}: col-width(5, 8); }
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}#{$type-namespace}7-8 { #{$property}: col-width(7, 8); }
+
+  // Tenths
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}1-10 { #{$property}: col-width(1, 10); }
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}3-10 { #{$property}: col-width(3, 10); }
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}7-10 { #{$property}: col-width(7, 10); }
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}9-10 { #{$property}: col-width(9, 10); }
+}
+
+@mixin make-columns-golden($name: '') {
+  // Golden Ratio 2 cols
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}gold-2-sm { width: 38.196659323449836%; }
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}gold-2-lg { width: 61.80334067655017%; }
+
+  // Golden Ratio 3 cols
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}gold-3-sm { width: 19.09836219483%; }
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}gold-3-md { width: 30.901722977815094%; }
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}gold-3-lg { width: 49.999914827354914%; }
+}
+
+// Utilities
+@mixin make-columns-utilities($name: '') {
+  $name: grid-default($name);
+
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}centered {
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+  }
+
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}uncentered {
+    margin-left: 0;
+    margin-right: 0;
+    float: left;
+  }
+
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}left {
+    float: left;
+  }
+
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}right {
+    float: right;
+  }
+
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}auto {
+    width: auto;
+  }
+
+  .#{$grid-namespace}#{$grid-col-namespace}#{$name}gutter-2x {
+    padding-left: $grid-gutter-width * 2;
+  }
+}
+
+// Make grid mixin, to create complete grid system
+// ------------------------------------
+
+@mixin make-grid($class: '') {
+  @if ($grid-type == 'even') {
+    @include make-columns($class);
+    @if ($grid-output-helpers) {
+      @include make-columns-push($class);
+      @include make-columns-pull($class);
+      @include make-columns-offset($class);
+    }
+  }
+  @else if ($grid-type == 'division') {
+    @include make-columns-division($class, 'width');
+    @if ($grid-output-helpers) {
+      @include make-columns-division($class, 'push');
+      @include make-columns-division($class, 'pull');
+    }
+    @if ($grid-output-golden) {
+      @include make-columns-golden($class);
+    }
+  }
+  @else {
+    @warn 'No valid grid type defined';
+  }
+  @include make-columns-utilities($class);
+}
+
+
+// Create grid classes
+// ------------------------------------
+
+// Container
+.#{$grid-namespace}container {
+  @extend %#{$grid-namespace}container;
+}
+
+// Container without gutter variant
+.#{$grid-namespace}container--expand {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+// Row
+.#{$grid-namespace}row {
+  @extend %#{$grid-namespace}row;
+
+  // Apply base columns style on direct childs
+  > * {
+    @extend %#{$grid-namespace}col-item;
+  }
+}
+
+// For push and pull helpers, required since they are relatively positionned
+@if ($grid-output-helpers) {
+  [class*="#{$grid-namespace}push-"],
+  [class*="#{$grid-namespace}pull-"] {
+    @extend %#{$grid-namespace}relative;
+  }
+}
+
+
+// Default columns
+@include make-grid();
+
+// If we want breakpoint-based columns
+@if ($grid-output-breakpoints) {
+  // Loop through breakpoints list
+  @each $bp-abbr, $bp-value in $grid-breakpoints {
+    // stylelint-disable media-feature-no-missing-punctuation
+    @media (min-width: to-em($bp-value, $grid-em-base)) {
+      @include make-grid('#{$bp-abbr}-');
+    }
+  }
+}

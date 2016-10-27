@@ -1,0 +1,70 @@
+// ----------------------------------------------------------------------------
+// Components - Flex embeds for intrinsic ratio embeds
+// https://github.com/suitcss/components-flex-embed
+// Credit: Nicolas Gallagher and SUIT CSS.
+//
+// Example:
+//
+// ```
+// <div class="flex-embed">
+//   <div class="flex-embed__ratio flex-embed__ratio--16by9"></div>
+//   <div class="flex-embed__content">
+//     <!-- child content -->
+//   </div>
+// </div>
+// ```
+//
+// Example with inline ratio:
+//
+// ```
+// <div class="flex-embed">
+//   <div class="flex-embed__ratio" style="padding-bottom:{{percentage}}%"></div>
+//   <div class="flex-embed__content">
+//     <!-- child content -->
+//   </div>
+// </div>
+// ```
+// ----------------------------------------------------------------------------
+
+
+.flex-embed {
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.flex-embed__ratio {
+  display: block;
+  padding-bottom: 100%;
+  width: 100%;
+}
+
+.flex-embed__ratio--2by1 {
+  padding-bottom: 50%;
+}
+
+.flex-embed__ratio--16by9 {
+  padding-bottom: 56.25%;
+}
+
+.flex-embed__ratio--4by3 {
+  padding-bottom: 75%;
+}
+
+.flex-embed__ratio--5by4 {
+  padding-bottom: 80%;
+}
+
+.flex-embed__content {
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.flex-embed-placeholder {
+  background: transparent url(../img/logo-fanclub.png) center center no-repeat;
+  background-size: 25% auto;
+}

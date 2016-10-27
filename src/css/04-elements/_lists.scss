@@ -1,0 +1,25 @@
+// ----------------------------------------------------------------------------
+// Elements - Lists
+// ----------------------------------------------------------------------------
+
+
+ul,
+ol {
+  margin-bottom: vr-rem(3);
+  padding-left: vr-rem(4);
+}
+
+dt {
+  font-weight: $font-weight-bold;
+}
+
+
+// Reset styles for list contained in nav tag.
+// ------------------------------------
+
+nav ol,
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,56 @@
+// ----------------------------------------------------------------------------
+// Elements - Headings
+// ----------------------------------------------------------------------------
+
+
+// stylelint inline disable
+// ------------------------------------
+// stylelint-disable selector-list-comma-newline-after
+
+
+// Global headings styles, responsive modular scale for font-size
+// ------------------------------------
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: vr-unitless(4);
+  font-weight: $font-weight-light;
+  color: $color-headings;
+  // Add space when is an adjacent selector
+  // https://developer.mozilla.org/en/docs/Web/CSS/Adjacent_sibling_selectors
+  * + & {
+    padding-top: vr-rem(2);
+  }
+  // Set direct links inside headings color to default
+  > a {
+    color: $color-headings;
+
+    &:hover {
+      color: $color-link;
+    }
+  }
+}
+
+h1 {
+  margin-bottom: vr-rem(4);
+  @include font-size-ms(4, 3);
+}
+
+h2 {
+  margin-bottom: vr-rem(3);
+  @include font-size-ms(3, 3);
+}
+
+h3 {
+  margin-bottom: vr-rem(2);
+  @include font-size-ms(2);
+}
+
+h4 {
+  margin-bottom: vr-rem(1);
+  @include font-size-ms(1);
+}
+
+h5, h6 {
+  margin-bottom: vr-rem(1);
+  @include font-size-ms(0);
+}

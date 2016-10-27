@@ -1,0 +1,46 @@
+{
+  "autoprefixer": {
+    "browsers": ["last 2 versions", "ie >= 10"]
+  },
+  "browsersync": {
+    "baseDir": "./public/",
+    "files": [
+      "public/**/*.html",
+      "public/assets/css/*.css",
+      "public/assets/img/**/*",
+      "public/assets/vendor/**/*"
+    ]
+  },
+  "minifycss": {
+    "src": "public/assets/css/**/!(*.min).css",
+    "dest": "public/assets/css"
+  },
+  "revision": {
+    "src": [
+      "public/assets/css/*.css",
+      "public/assets/js/**.*"
+    ],
+    "base": "../public/assets",
+    "dest": "public/assets/build"
+  },
+  "sass": {
+    "src": "src/css/*.scss",
+    "dest": "public/assets/css"
+  },
+  "webpack": {
+    "filename": "index.js",
+    "root": "src/js",
+    "entry": "src/js/index",
+    "output": "public/assets/js",
+    "publicPath": "assets/js/"
+  },
+  "watch": {
+    "sass": "src/css/**/*.scss"
+  },
+  "stylelint": {
+    "src": [
+      "src/css/**/*",
+      "src/js/**/*.{css,scss}"
+    ]
+  }
+}

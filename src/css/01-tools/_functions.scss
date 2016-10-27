@@ -1,0 +1,90 @@
+// ----------------------------------------------------------------------------
+// Tools - Functions
+// ----------------------------------------------------------------------------
+
+
+// Simple pixel to em converter function, specify base font-size if context
+// has different size than base-font-size.
+// Usage: `.example { padding: to-em(16px); }`
+// Becomes: `.example { padding: 1em; }`
+// http://vvv.tobiassjosten.net/css/px-to-em-with-sass/
+// ------------------------------------
+
+@function to-em($px, $base: $base-font-size) {
+  @return decimal-round(($px / $base) * 1em, $global-decimal-round);
+}
+
+@function to-rem($px, $base: $root-font-size) {
+  @return decimal-round(($px / $base) * 1rem, $global-decimal-round);
+}
+
+
+// Vertical Rhythm functions
+// In EMs, PX and unitless (line-heights)
+// Use for line-heights and vertical spacing
+// All based on $base-size setting by default (settings/_defaults.scss)
+// ------------------------------------
+
+@function vr-em($multiplier, $context: $base-font-size, $offset: 0) {
+  @return to-em(($multiplier * $base-size) + $offset, $context);
+}
+
+@function vr-rem($multiplier, $offset: 0) {
+  @return to-rem(($multiplier * $base-size) + $offset, $root-font-size);
+}
+
+@function vr-px($multiplier, $offset: 0) {
+  @return ($multiplier * $base-size) + $offset;
+}
+
+@function vr-unitless($multiplier, $context: $root-font-size, $offset: 0) {
+  @return decimal-round(
+    strip-units((($multiplier * $base-size) + $offset) / $context),
+    $global-decimal-round
+  );
+}
+
+
+// Strip any unit for unitless value
+// ------------------------------------
+
+@function strip-units($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+
+// Simple unitless ratio converter, based on base line height
+// Usage: `.example { line-height: unitless-line-height(16px); }`
+// Becomes: `.example { line-height: 1.5; }`
+// ------------------------------------
+
+@function unitless-line-height($px, $base: $base-line-height) {
+  @return decimal-round(($px / $base), $global-decimal-round);
+}
+
+
+// Fetch nested keys
+// http://www.sitepoint.com/extra-map-functions-sass/
+// ------------------------------------
+
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+
+  @return $map;
+}
+
+
+// An alias for `map-get`
+// Thanks to https://github.com/lonelyplanet/rizzo-next :)
+// https://github.com/lonelyplanet/rizzo-next/blob/master/sass/_functions.scss
+//
+// @param  {Map}    $map - Map name
+// @param  {String} $key - Key name
+// @return {String}      - Key value
+// ------------------------------------
+
+@function get($map, $key) {
+  @return map-get($map, $key);
+}

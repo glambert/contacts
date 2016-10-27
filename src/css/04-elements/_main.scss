@@ -1,0 +1,68 @@
+// ----------------------------------------------------------------------------
+// Elements - Main
+// ----------------------------------------------------------------------------
+
+
+// Use the more useful border-box box model
+// http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+// ------------------------------------
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+
+// Root page elements
+// ------------------------------------
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 100%;
+  font-size: 100%;
+}
+
+body {
+  min-height: 100%;
+  position: relative;
+  padding: vr-rem(3) 0;
+  background: $color-background;
+  color: $color-text;
+  line-height: $base-line-height-ratio;
+  font-family: $font-family-base;
+  font-weight: $font-weight-base;
+  font-size: (($base-font-size / $root-font-size) * 1rem);
+}
+
+
+// Baseline grid debug
+// ------------------------------------
+
+// Show baseline grid overlay with http://basehold.it
+@if ($base-grid-debug) {
+  body::after {
+    position: absolute;
+    width: auto;
+    height: auto;
+    z-index: 9999;
+    content: '';
+    display: block;
+    pointer-events: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url('http://basehold.it/i/#{strip-units($base-size)}') repeat top left;
+  }
+}

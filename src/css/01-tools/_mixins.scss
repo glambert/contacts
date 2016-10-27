@@ -1,0 +1,351 @@
+// ----------------------------------------------------------------------------
+// Tools - Mixins
+// ----------------------------------------------------------------------------
+
+
+// Micro clearfix, as per:
+// css-101.org/articles/clearfix/latest-new-clearfix-so-far.php
+// Also available as utility class in utilities/_clearfix.scss
+// ------------------------------------
+
+@mixin clearfix() {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+
+// Create a fully formed type style (sizing and vertical rhythm) by passing in a
+// single value, e.g.:
+// `@include font-size(10px);`
+// Optionnaly provide base size to calculate on
+// Line height multiplier is used in conjuction with vertical rhythm, to set it
+// based on the given font-size
+// ------------------------------------
+
+@mixin font-size($font-size, $line-height-multiplier: '', $base: $root-font-size) {
+  // Pixel size, required if supporting IE8
+  // font-size: $font-size;
+  font-size: decimal-round(to-rem($font-size), $global-decimal-round);
+  // If line-height is given, use vertical rhythm function to calculate it
+  @if $line-height-multiplier != '' {
+    line-height: vr-unitless($line-height-multiplier, $font-size);
+  }
+}
+
+// Modular scale version, with ms-respond() responsive typography by default
+@mixin font-size-ms($multiplier, $line-height-multiplier: null, $is-responsive: true) {
+  @if ($is-responsive) {
+    @include ms-respond(font-size, $multiplier);
+  }
+  @else {
+    font-size: decimal-round(ms($multiplier), $global-decimal-round);
+  }
+  // If line-height is given, use vertical rhythm function to calculate it
+  @if $line-height-multiplier != null {
+    line-height: vr-unitless($line-height-multiplier);
+  }
+}
+
+// Modular scale version, non responsive
+@mixin font-size-ms-fixed($multiplier, $line-height-multiplier: null) {
+  font-size: decimal-round(ms($multiplier), $global-decimal-round);
+  // If line-height is given, use vertical rhythm function to calculate it
+  @if $line-height-multiplier != null {
+    line-height: vr-unitless($line-height-multiplier);
+  }
+}
+
+
+// Tab focus mixin
+// ------------------------------------
+
+@mixin tab-focus() {
+  // Default
+  outline: thin dotted;
+  // WebKit
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+
+// Vertical align anything mixin
+// http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/
+// ------------------------------------
+
+@mixin vertical-align($position: '') {
+  top: 50%;
+  transform: translateY(-50%);
+
+  @if $position != '' {
+    position: $position;
+  }
+}
+
+
+// Screen-reader friendly show / hide mixin
+// ------------------------------------
+
+@mixin screen-reader-hide($important: false) {
+  display: none if($important, !important, null);
+  visibility: hidden if($important, !important, null);
+}
+
+@mixin screen-reader-show($important: false) {
+  display: block if($important, !important, null);
+  visibility: visible if($important, !important, null);
+}
+
+
+// Force overly long spans of text to truncate, e.g.:
+// `@include truncate(100%);`
+// Where `$truncation-boundary` is a united measurement.
+// ------------------------------------
+
+@mixin truncate($truncation-boundary: 100%) {
+  max-width: $truncation-boundary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+// Custom (webkit) scrollbar styles
+// Apply globally or to specific element
+// `@include scrollbar()`
+// - or -
+// .element {
+//   @include scrollbar();
+// }
+// ------------------------------------
+
+@mixin custom-scrollbar($width: 6px, $height: 6px, $track: #f7f7f7, $thumb: #d7d7d7, $thumb-inactive: #fcfcfc) {
+  // stylelint-disable
+  &::-webkit-scrollbar { width: $width; }
+  &::-webkit-scrollbar:horizontal { height: $height; }
+  &::-webkit-scrollbar-track { background: $track; }
+  &::-webkit-scrollbar-thumb { background: $thumb; }
+  &::-webkit-scrollbar-thumb:window-inactive { background: $thumb-inactive; }
+  // stylelint-enable
+}
+
+
+// Takes content passed to the mixin and applies it to placeholder
+// properties and to the .placeholder polyfill class
+// `@include placeholder;`
+// ------------------------------------
+
+@mixin placeholder($color: $color-text-light) {
+  // Firefox
+  &::-moz-placeholder {
+    color: $color;
+    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+  }
+  &:-ms-input-placeholder { color: $color; } // Internet Explorer 10+
+  &::-webkit-input-placeholder { color: $color; } // Safari and Chrome
+  &.placeholder { color: $color; } // Polyfill class
+}
+
+
+// Ultimate arrow mixin
+// `@include arrow($side, $align, $size, $color, $borderColor, $borderSize);`
+// TODO: seperate mixins in partials (i.e tools/mixins/_arrow.scss)
+// ------------------------------------
+
+@mixin arrow($side: "right", $align: "center", $size: 20px, $color: #f6f6f6, $borderColor: "none", $borderSize: 3px) {
+  $selector: "&:after, &:before";
+
+  @if $borderColor == "none" {
+    $selector: "&:after";
+  }
+
+  #{$selector} {
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    visibility: visible;
+  }
+
+  &::after {
+    border-width: $size;
+    @include arrow_helper($size, $color, $size, $side, $align);
+  }
+
+  @if $borderColor != "none" {
+    &::before {
+      border-width: $borderSize + $size;
+      @include arrow_helper($size + $borderSize, $borderColor, $size - $borderSize, $side, $align);
+    }
+  }
+}
+
+@mixin arrow_helper($arrowSize, $arrowColor, $margin, $side, $align) {
+  @if $side == "top" {
+    border-bottom-color: $arrowColor;
+    top: -2 * $arrowSize;
+  }
+  @if $side == "bottom" {
+    border-top-color: $arrowColor;
+    bottom: -2 * $arrowSize;
+  }
+  @if $side == "left" {
+    border-right-color: $arrowColor;
+    left: -2 * $arrowSize;
+  }
+  @if $side == "right" {
+    border-left-color: $arrowColor;
+    right: -2 * $arrowSize;
+  }
+  @if $side == "right" or $side == "left" {
+    @if $align == "center" {
+      top: 50%;
+      margin-top: -$arrowSize;
+    }
+    @else if $align == "top" {
+      top: $margin;
+    }
+    @else if $align == "bottom" {
+      bottom: $margin;
+    }
+  }
+  @if $side == "bottom" or $side == "top" {
+    @if $align == "center" {
+      right: 50%;
+      margin-right: -$arrowSize;
+    }
+    @else if $align == "left" {
+      left: $margin;
+    }
+    @else if $align == "right" {
+      right: $margin;
+    }
+  }
+}
+
+
+// Responsive utilities
+// More easily include all the states for responsive-utilities.less.
+// [converter] $parent hack
+// ------------------------------------
+@mixin responsive-visibility($parent) {
+  #{$parent} {
+    display: block !important;
+  }
+  table#{$parent} { display: table !important; }
+  tr#{$parent} { display: table-row !important; }
+
+  th#{$parent},
+  td#{$parent} { display: table-cell !important; }
+}
+
+// [converter] $parent hack
+@mixin responsive-invisibility($parent) {
+  #{$parent} {
+    display: none !important;
+  }
+}
+
+
+// Mixing for icon class so we can use it in custom places
+// For example:
+//   .menu:before {
+//     @include %iconfont;
+//     content: '\e601';
+//   }
+// ------------------------------------
+
+@mixin icon-font() {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+// Responsive suffixes helper, to create mobile-first classes
+// based on our breakpoint map.
+//
+// Params:
+// $class - can be a string for a single definition, or a map for multiple definition
+//          per breakpoint, instead of one for each.
+//
+// Example for a single item:
+//
+// ```
+// @include bp-class('u-db') {
+//   display: block;
+// }
+// ```
+//
+// Results in (only first breakpoint shown):
+//
+// ```
+// @media screen and (min-width: 20em) {
+// .u-db\@tn {
+//   display: block; } }
+// ```
+//
+// Or pass in a map of classes with a nested map of $property: $value, for example:
+//
+// ```
+// @include bp-class((
+//   'u-text-right': ('text-align': right),
+//   'u-text-center': ('text-align': center)
+// ));
+// ```
+//
+// Results in (only first breakpoint shown):
+//
+// ```
+// @media screen and (min-width: 20em) {
+// .u-text-right\@tn {
+//   text-align: right; }
+// .u-text-center\@tn {
+//   text-align: center; } }
+// ```
+//
+// References:
+// http://www.sitepoint.com/using-sass-maps/
+// http://csswizardry.com/2015/08/bemit-taking-the-bem-naming-convention-a-step-further/
+// ------------------------------------
+
+// stylelint-disable max-nesting-depth
+@mixin bp-class($classmap) {
+  @if ($bp-map) {
+    @each $bp-abbr, $bp-value in $bp-map {
+      @include breakpoint($bp-value) {
+        @if type-of($classmap) == 'string' {
+          .#{$classmap}\@#{$bp-abbr} {
+            @content;
+          }
+        }
+        @elseif type-of($classmap) == 'map' {
+          @each $class, $properties in $classmap {
+            .#{$class}\@#{$bp-abbr} {
+              @each $property, $value in $properties {
+                #{$property}: $value;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @else {
+    // Fallback to single class if no $bp-map defined
+    .#{$class} { @content; }
+  }
+}
+// stylelint-enable

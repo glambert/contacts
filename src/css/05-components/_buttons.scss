@@ -1,0 +1,126 @@
+// ----------------------------------------------------------------------------
+// Components - Buttons
+// ----------------------------------------------------------------------------
+
+
+// Settings
+// ------------------------------------
+
+$button: (
+  'namespace': 'btn',
+  'border-radius': $global-border-radius,
+) !default;
+
+
+// Mixins
+// ------------------------------------
+
+@mixin button-variant($color, $bgcolor, $border, $h-color: null, $h-bgcolor: null, $h-border: null) {
+  color: $color;
+  background-color: $bgcolor;
+  // border: 1px solid $border;
+
+  &:hover {
+    color: if($h-color, $h-color, $color);
+    background-color: if($h-bgcolor, $h-bgcolor, lighten($bgcolor, 12%));
+    // border-color: if($h-border, $h-border, $border);
+  }
+}
+
+
+// Base style
+// ------------------------------------
+
+.#{get($button, 'namespace')},
+%#{get($button, 'namespace')} {
+  display: inline-block;
+  position: relative;
+  // Use EMs for padding so we can combine with text-size utilities and have
+  // a proportinal spacing
+  padding: vr-em(2) vr-em(3);
+  vertical-align: middle;
+  line-height: 1;
+  cursor: pointer;
+  border: 0;
+  font-size: $base-font-size; // Set base size in pixel for input-group
+  background-image: none; // Reset unusual Firefox-on-Android default style
+  transition: all $global-transition-time;
+  user-select: none;
+  appearance: none;
+  border-radius: get($button, 'border-radius');
+
+  &,
+  &:active,
+  &.is-active {
+    &:focus,
+    &.is-focus {
+      @include tab-focus;
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &.is-focus {
+    text-decoration: none;
+  }
+
+  &:active,
+  &.is-active {
+    outline: 0;
+  }
+
+  &.is-disabled,
+  &[disabled] {
+    cursor: not-allowed;
+    pointer-events: none; // Future-proof disabling of clicks
+    opacity: 0.7;
+    box-shadow: none;
+    text-shadow: none;
+  }
+
+  // Add spacing when multiple buttons are side by side
+  & + & {
+    margin-left: vr-rem(1);
+  }
+}
+
+
+// Style modifiers
+// ------------------------------------
+
+.#{get($button, 'namespace')}--default,
+%#{get($button, 'namespace')}--default {
+  @include button-variant($color-text, $color-grey-300, $color-grey-300, null, $color-grey-200);
+}
+
+.#{get($button, 'namespace')}--primary,
+%#{get($button, 'namespace')}--primary {
+  @include button-variant($color-white, $color-primary, $color-primary);
+}
+
+.#{get($button, 'namespace')}--secondary,
+%#{get($button, 'namespace')}--secondary {
+  @include button-variant($color-white, $color-secondary, $color-secondary);
+}
+
+.#{get($button, 'namespace')}--dark,
+%#{get($button, 'namespace')}--dark {
+  @include button-variant($color-white, $color-dark, $color-dark);
+}
+
+
+// Type modifiers
+// ------------------------------------
+
+// Full-width button, centered text.
+.#{get($button, 'namespace')}--block,
+%#{get($button, 'namespace')}--block {
+  display: block;
+  width: 100%;
+  text-align: center;
+
+  // Reset spacing when multiple buttons are side by side
+  & + & {
+    margin-left: 0;
+  }
+}

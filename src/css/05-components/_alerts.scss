@@ -1,0 +1,107 @@
+// ----------------------------------------------------------------------------
+// Components - Alerts
+// ----------------------------------------------------------------------------
+
+
+// Settings
+// ------------------------------------
+
+// TODO: move setting in Sass map
+// $alert: (
+//   name: value
+// ) !default;
+// Use with `map-get($alerts, 'name')` or `get($alert, 'name')`
+
+
+// Mixins
+// ------------------------------------
+
+@mixin alert-variant($background, $text-color, $border: null) {
+  background-color: $background;
+  color: $text-color;
+  @if ($border) {
+    border: 1px solid $border;
+  }
+  @else {
+    border: 1px solid darken(adjust-hue($background, -10), 5%);
+  }
+
+  a {
+    color: $text-color;
+
+    &:hover {
+      color: darken($text-color, 12%);
+    }
+  }
+}
+
+
+// Alert base placeholder
+// ------------------------------------
+
+.alert {
+  padding: vr-rem(1, -1) to-rem(10px);
+  font-weight: $font-weight-normal;
+  text-align: left;
+  @if $global-border-radius > 0 {
+    border-radius: $global-border-radius;
+  }
+  // Remove spacing of direct inner content
+  > p,
+  > ul {
+    margin-bottom: 0;
+  }
+  // Force underline for links
+  a {
+    text-decoration: underline;
+  }
+}
+
+
+// State modifiers
+// ------------------------------------
+
+.alert--success {
+  @include alert-variant($color-success-bg, $color-success-text, $color-success-border);
+}
+
+.alert--info {
+  @include alert-variant($color-info-bg, $color-info-text, $color-info-border);
+}
+
+.alert--warning {
+  @include alert-variant($color-warning-bg, $color-warning-text, $color-warning-border);
+}
+
+.alert--danger,
+.alert--error {
+  @include alert-variant($color-danger-bg, $color-danger-text, $color-danger-border);
+}
+
+
+// Alert state classes
+// TODO: move to utilities?
+// ------------------------------------
+
+// Is error state, applied to <input> elements
+.is-error {
+  border-color: $color-danger !important;
+}
+
+.is-success {
+  color: $color-success-text;
+}
+
+
+// ParsleyJS alert modifier
+// ------------------------------------
+
+// Those alerts are added in the DOM on load, even if no validation was made,
+// let's hide them by default and show them when they are filled.
+.alert--parsley {
+  display: none;
+
+  &.filled {
+    display: block;
+  }
+}

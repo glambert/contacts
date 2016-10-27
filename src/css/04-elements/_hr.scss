@@ -1,0 +1,13 @@
+// ----------------------------------------------------------------------------
+// Elements - Horizontal rule
+// ----------------------------------------------------------------------------
+
+
+// Offset the size of border to margin-top, to follow vertical rhythm
+hr {
+  margin: $gutter-width 0;
+  border: 0;
+  border-bottom: 1px solid $color-border;
+  width: 100%;
+  display: block;
+}

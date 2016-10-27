@@ -1,0 +1,36 @@
+// ----------------------------------------------------------------------------
+// Generic - Reset
+// ----------------------------------------------------------------------------
+
+
+// stylelint inline disable
+// ------------------------------------
+// stylelint-disable selector-list-comma-newline-after
+
+
+// Use on top of normalize.css, remove margins for certain base elements.
+// ------------------------------------
+
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+dl, dd, ol, ul,
+form,
+figure, fieldset, legend,
+table, th, td, caption,
+hr {
+  margin: 0;
+  padding: 0;
+}
+
+
+// Set consistent default bottom spacing using EM-based vertical rhythm mixin.
+// ------------------------------------
+
+// h1, h2, h3, h4, h5, h6, hgroup,
+// ul, ol, dl,
+// blockquote, p, address,
+// form,
+// fieldset, figure,
+// table {
+//   margin-bottom: vr-rem(3);
+// }

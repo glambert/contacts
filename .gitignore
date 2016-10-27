@@ -1,0 +1,15 @@
+# Back End / General ignores
+/vendor
+composer.phar
+.env.*.php
+.env.php
+.DS_Store
+.tags*
+Thumbs.db
+
+# Front End ignores
+node_modules
+public/assets/build/
+public/assets/css/
+public/assets/js/
+npm-debug.log
