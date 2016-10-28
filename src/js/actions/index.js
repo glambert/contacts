@@ -36,9 +36,10 @@ export function deleteContact(id) {
 }
 
 export const SET_MODE = 'SET_MODE';
-export function setMode(mode) {
+export function setMode(mode, id = null) {
   return {
     type: SET_MODE,
-    mode
+    mode,
+    id
   }
 }
