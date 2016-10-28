@@ -86,6 +86,7 @@
 
 @each $bp-abbr, $bp-value in $bp-map {
   .u-width-#{$bp-abbr}       { max-width: $bp-value; }
+  .u-width-#{$bp-abbr}-fixed { width: $bp-value; }
 }
 
 // Ideal line character length (45-90) max width, depending on $base-font-size
@@ -156,6 +157,14 @@ $responsive-text-helpers: (
   'u-text-center': ('text-align': center)
 );
 @include bp-class($responsive-text-helpers);
+
+
+// Images
+// ------------------------------------
+
+.u-img-circle {
+  border-radius: 50%;
+}
 
 
 // Visibility

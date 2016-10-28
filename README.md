@@ -19,10 +19,12 @@ Returns a list of all available contacts:
   {
     "id": 1,
     "name": "Guillaume Lambert",
-    "jobTitle": "Senior Front-End Developer",
+    "title": "Senior Front-End Developer",
     "address": "2675 Basile-Routhier, Laval, QC. Canada",
+    "phone (home)": "514-555-5555",
+    "phone (work)": "514-555-5555",
     "email": "glambertmtl@gmail.com",
-    "picture": "http://placehold.it/200x200&text=Picture",
+    "picture": "http://placehold.it/200/f7f7f7/424242/?text=Photo",
     "note": "Building the Web since 1996"
   },
   ...
@@ -37,10 +39,12 @@ Returns a contact by ID:
 {
   "id": 1,
   "name": "Guillaume Lambert",
-  "jobTitle": "Senior Front-End Developer",
+  "title": "Senior Front-End Developer",
   "address": "2675 Basile-Routhier, Laval, QC. Canada",
+  "phone (home)": "514-555-5555",
+  "phone (work)": "514-555-5555",
   "email": "glambertmtl@gmail.com",
-  "picture": "http://placehold.it/200x200&text=Picture",
+  "picture": "http://placehold.it/200/f7f7f7/424242/?text=Photo",
   "note": "Building the Web since 1996"
 }
 ```
@@ -50,8 +54,10 @@ Returns a contact by ID:
 Creates a contact, the following parameters are expected:
 
 - name (required)
-- jobTitle
+- title
 - address
+- phoneHome
+- phoneWork
 - email
 - picture
 - note
@@ -64,8 +70,10 @@ Edits a contact by sending the entire data back to the server, the following
 parameters are expected:
 
 - name (required)
-- jobTitle
+- title
 - address
+- phoneHome
+- phoneWork
 - email
 - picture
 - note

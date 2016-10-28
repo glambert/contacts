@@ -18,7 +18,7 @@ h1, h2, h3, h4, h5, h6 {
   // Add space when is an adjacent selector
   // https://developer.mozilla.org/en/docs/Web/CSS/Adjacent_sibling_selectors
   * + & {
-    padding-top: vr-rem(2);
+    padding-top: vr-rem(1);
   }
   // Set direct links inside headings color to default
   > a {

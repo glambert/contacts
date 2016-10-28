@@ -68,9 +68,9 @@ input[type="checkbox"]:focus {
   width: 100%;
   // Make inputs at least the height of their button counterpart
   // (base line-height + padding + border)
-  height: vr-rem(4) + $base-line-height-ratio - vr-rem(1);
+  height: vr-rem(2.5) + $base-line-height-ratio;
   // Offset to make up for border size
-  padding: vr-rem(1.5, -1) to-rem(9px);
+  padding: vr-rem(1) vr-rem(2);
   border: 1px solid $color-border;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: $global-border-radius;

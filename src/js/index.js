@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import App from './containers/App';
 
 class Contacts extends Component {
 
   render() {
     return (
-      <div className="u-pb-4">
-        App entry point
-      </div>
+      <App />
     )
   }
 

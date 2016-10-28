@@ -22,7 +22,7 @@ $button: (
 
   &:hover {
     color: if($h-color, $h-color, $color);
-    background-color: if($h-bgcolor, $h-bgcolor, lighten($bgcolor, 12%));
+    background-color: if($h-bgcolor, $h-bgcolor, darken($bgcolor, 6%));
     // border-color: if($h-border, $h-border, $border);
   }
 }
