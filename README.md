@@ -131,6 +131,7 @@ npm run build
 - [ ] Add inline form validation
 - [ ] Use CSS modules to encapsulate components-specific styles
 - [ ] Add routing for direct access to contacts
+- [ ] State connect optimization
 - [ ] Save app state in storage
 - [ ] Add state transitions & animations
 - [ ] Tests!
