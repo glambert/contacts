@@ -54,7 +54,8 @@ $button: (
   &.is-active {
     &:focus,
     &.is-focus {
-      @include tab-focus;
+      // @include tab-focus;
+      outline: none;
     }
   }
 
@@ -90,7 +91,7 @@ $button: (
 
 .#{get($button, 'namespace')}--default,
 %#{get($button, 'namespace')}--default {
-  @include button-variant($color-text, $color-grey-300, $color-grey-300, null, $color-grey-200);
+  @include button-variant($color-text, $color-grey-200, $color-grey-200, null, $color-grey-100);
 }
 
 .#{get($button, 'namespace')}--primary,
