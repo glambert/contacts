@@ -37,6 +37,7 @@ export default function contacts(state = data, action) {
       });
 
     case actions.DELETE_CONTACT:
+      console.log(action);
       return state.filter((contact) => contact.id !== action.id);
 
     default:

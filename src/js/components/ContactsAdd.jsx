@@ -1,15 +1,21 @@
 import React, { PropTypes, Component } from 'react';
 
-const ContactsAdd = ({}) => {
+const ContactsAdd = ({ onClick }) => {
   return (
     <div className="u-mb-2">
-      <a href="" className="btn btn--primary btn--block">
+      <button className="btn btn--primary btn--block" onClick={onClick}>
         Add Contact
-      </a>
+      </button>
     </div>
   )
-};
+}
 
-ContactsAdd.propTypes = {};
+ContactsAdd.propTypes = {
+  onClick: () => {}
+}
+
+ContactsAdd.propTypes = {
+  onClick: PropTypes.func
+}
 
 export default ContactsAdd;

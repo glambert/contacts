@@ -1,32 +1,29 @@
 import React, { PropTypes, Component } from 'react';
-import ContactsAdd from './ContactsAdd';
 import ContactsFilter from './ContactsFilter';
 import ContactsListItem from './ContactsListItem';
 
-const ContactsList = ({ list }) => {
+const ContactsList = ({ list, onItemClick }) => {
   return (
-    <div className="u-pad-3">
-      <ContactsAdd />
+    <div>
       <ContactsFilter />
       {list.map((contact, i) =>
-        <ContactsListItem key={i} contact={contact} />
+        <ContactsListItem
+          key={i}
+          contact={contact}
+          onClick={(id) => onItemClick(id)} />
       )}
     </div>
   )
 }
 
 ContactsList.defaultProps = {
-  list: [
-    { name: 'Anne-Marie Fortin' },
-    { name: 'Pascal Peuckert' },
-    { name: 'Tom Bertrand' },
-    { name: 'Julien L. le Goff' },
-    { name: 'Guillaume Lambert' },
-  ]
+  list: [],
+  onItemClick: (id) => {}
 }
 
 ContactsList.propTypes = {
-  list: PropTypes.array.isRequired
+  list: PropTypes.array.isRequired,
+  onItemClick: PropTypes.func.isRequired
 }
 
 export default ContactsList;

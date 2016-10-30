@@ -1,10 +1,10 @@
 import * as actions from '../actions';
 
-// Can be 'view', 'create' or 'edit'
-// 'edit' requires a ID
+// Status can be 'view', 'create' or 'edit'
+// Set to view id #1 as initial state
 const initialState = {
   status: 'view',
-  id: null
+  id: 1
 };
 
 export default function mode(state = initialState, action) {

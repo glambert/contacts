@@ -32,7 +32,7 @@
     "root": "src/js",
     "entry": "src/js/index",
     "output": "dist/js",
-    "publicPath": "assets/js/"
+    "publicPath": "dist/js/"
   },
   "watch": {
     "sass": "src/css/**/*.scss"

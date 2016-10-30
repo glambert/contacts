@@ -10,9 +10,10 @@
 // adding a new contact in ADD_CONTACT
 let nextContactId = 6;
 
+export const ADD_CONTACT = 'ADD_CONTACT';
 export function addContact(data) {
   return {
-    type: 'ADD_CONTACT',
+    type: ADD_CONTACT,
     id: nextContactId++,
     data
   }
@@ -21,7 +22,7 @@ export function addContact(data) {
 export const EDIT_CONTACT = 'EDIT_CONTACT';
 export function editContact(id, data) {
   return {
-    type: 'EDIT_CONTACT',
+    type: EDIT_CONTACT,
     id,
     data
   }
@@ -36,10 +37,10 @@ export function deleteContact(id) {
 }
 
 export const SET_MODE = 'SET_MODE';
-export function setMode(mode, id = null) {
+export function setMode(status, id = null) {
   return {
     type: SET_MODE,
-    mode,
+    status,
     id
   }
 }
