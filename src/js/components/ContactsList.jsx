@@ -5,6 +5,7 @@ import ContactsListItem from './ContactsListItem';
 export default class ContactsList extends Component {
 
   static defaultProps = {
+    active: null,
     list: [],
     onItemClick: (id) => {}
   }
@@ -23,7 +24,7 @@ export default class ContactsList extends Component {
   }
 
   render() {
-    const { list, onItemClick } = this.props;
+    const { list, active, onItemClick } = this.props;
     const { filter } = this.state;
     const filteredList = filter ? list.filter((item) =>
       item.name.toLowerCase().indexOf(filter ? filter.toLowerCase() : null) !== -1
@@ -36,6 +37,7 @@ export default class ContactsList extends Component {
           <ContactsListItem
             key={i}
             contact={contact}
+            isActive={active === contact.id}
             onClick={(id) => onItemClick(id)} />
         )}
       </div>

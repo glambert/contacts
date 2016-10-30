@@ -125,7 +125,9 @@
 .u-text-right                { text-align: right; }
 .u-text-capitilize           { text-transform: capitalize; }
 .u-text-italic               { font-style: italic; }
-.u-text-bold                 { font-weight: bold; }
+.u-text-bold                 { font-weight: $font-weight-bold; }
+.u-text-medium               { font-weight: $font-weight-medium; }
+.u-text-normal               { font-weight: $font-weight-normal; }
 .u-text-underline            { text-decoration: underline; }
 
 // Sizes, modular scale based

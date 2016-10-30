@@ -26,6 +26,7 @@ class App extends Component {
               onClick={() => onContactAdd()} />
             <ContactsList
               list={contacts}
+              active={mode.id}
               onItemClick={(id) => onContactView(id)} />
           </div>
         </div>

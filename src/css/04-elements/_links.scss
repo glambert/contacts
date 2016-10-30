@@ -13,6 +13,5 @@ a {
   &:hover {
     outline: 0;
     color: darken($color-link, 18%);
-    transition: all $global-transition-time;
   }
 }

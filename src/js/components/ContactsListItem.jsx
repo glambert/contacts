@@ -5,13 +5,13 @@ import React, { PropTypes, Component } from 'react';
 // https://medium.com/@housecor/react-stateless-functional-components-nine-wins-you-might-have-overlooked-997b0d933dbc
 // When in doubt or a component needs lifecycle hooks, use `class Name extends Component {}`
 
-const ContactsListItem = ({ contact, onClick }) => {
-  const handleClick = (event) => {
-    event.preventDefault();
-    onClick(contact.id);
-  }
+const ContactsListItem = ({ contact, isActive, onClick }) => {
   return (
-    <a href="" className="u-display-block u-pad-vert-1" onClick={handleClick}>
+    <a href="" className={`u-display-block u-pad-vert-1 ${isActive ? 'u-text-normal' : ''}`}
+      onClick={(event) => {
+        event.preventDefault();
+        onClick(contact.id);
+      }}>
       {contact.name}
     </a>
   )

@@ -461,8 +461,7 @@ a {
   text-decoration: none; }
   a:hover {
     outline: 0;
-    color: #cd1518;
-    transition: all 200ms; }
+    color: #cd1518; }
 
 p {
   margin-bottom: 0.75rem; }
@@ -2462,7 +2461,13 @@ textarea.form-control {
   font-style: italic; }
 
 .u-text-bold {
-  font-weight: bold; }
+  font-weight: 700; }
+
+.u-text-medium {
+  font-weight: 600; }
+
+.u-text-normal {
+  font-weight: 400; }
 
 .u-text-underline {
   text-decoration: underline; }
