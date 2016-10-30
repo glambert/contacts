@@ -6,7 +6,7 @@ var webpackConfig = require('./global');
 
 module.exports = {
   debug: true,
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval-source-map',
   entry: [
     'webpack-hot-middleware/client?reload=true',
     webpackConfig.entry

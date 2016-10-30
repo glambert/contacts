@@ -10,11 +10,21 @@
 // adding a new contact in ADD_CONTACT
 let nextContactId = 6;
 
+// Thunk action creator, that adds contact and goes in view mode for it after
+export const CREATE_CONTACT = 'CREATE_CONTACT';
+export function createContact(data) {
+  let id = nextContactId++;
+  return (dispatch, getState) => {
+    dispatch(addContact(data, id));
+    dispatch(setMode('view', id));
+  }
+}
+
 export const ADD_CONTACT = 'ADD_CONTACT';
-export function addContact(data) {
+export function addContact(data, id) {
   return {
     type: ADD_CONTACT,
-    id: nextContactId++,
+    id,
     data
   }
 }

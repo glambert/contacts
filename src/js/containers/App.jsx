@@ -11,7 +11,13 @@ class App extends Component {
 
   render() {
     const { contacts, mode } = this.props;
-    const { onContactAdd, onContactView, onContactEdit, onContactDelete } = this.props;
+    const {
+      onContactAdd,
+      onContactView,
+      onContactEdit,
+      onContactDelete,
+      onContactSave
+    } = this.props;
     return (
       <div className="row">
         <div className="col-1-3">
@@ -32,7 +38,8 @@ class App extends Component {
             : <ContactsForm
                 status={mode.status}
                 contact={contacts.filter((contact) => contact.id === mode.id)[0]}
-                onSubmit={() => { console.log('Submit'); }}
+                onSave={(data) => onContactSave(data)}
+                onEdit={() => { console.log('Submit'); }}
                 onCancel={() => { console.log('Cancel'); }} />
           }
         </div>
@@ -54,7 +61,8 @@ const mapDispatchToProps = (dispatch) => {
     onContactAdd: () => dispatch(actions.setMode('create')),
     onContactView: (id) => dispatch(actions.setMode('view', id)),
     onContactEdit: (id) => dispatch(actions.setMode('edit', id)),
-    onContactDelete: (id) => dispatch(actions.deleteContact(id))
+    onContactDelete: (id) => dispatch(actions.deleteContact(id)),
+    onContactSave: (data) => dispatch(actions.createContact(data))
   }
 }
 

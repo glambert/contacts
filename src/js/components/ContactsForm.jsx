@@ -5,12 +5,15 @@ export default class ContactsForm extends Component {
 
   static propTypes = {
     status: PropTypes.string,
-    contact: PropTypes.object
+    contact: PropTypes.object,
+    onSave: PropTypes.func,
+    onEdit: PropTypes.func,
+    onCancel: PropTypes.func,
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(serialize(this.form, { hash: true }));
+    this.props.onSave(serialize(this.form, { hash: true }));
   }
 
   handleCancelClick = (event) => {
@@ -19,6 +22,7 @@ export default class ContactsForm extends Component {
   }
 
   render() {
+    const { status, contact } = this.props;
     return (
       <form className="u-p-3" onSubmit={this.handleSubmit} ref={(form) => this.form = form}>
         <div className="row u-mb-2">
@@ -62,8 +66,12 @@ export default class ContactsForm extends Component {
           </div>
         </div>
         <div className="u-pt-1 u-text-center">
-          <a className="btn btn--default" onClick={this.handleCancelClick}>Cancel</a>
-          <button type="submit" className="btn btn--primary">Save</button>
+          {status === 'edit' &&
+            <a className="btn btn--default" onClick={this.handleCancelClick}>Cancel</a>
+          }
+          <button type="submit" className="btn btn--primary">
+            {status === 'create' ? 'Save' : 'Edit'}
+          </button>
         </div>
       </form>
     );

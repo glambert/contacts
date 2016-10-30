@@ -8,7 +8,8 @@ const contact = (state = {}, action) => {
     case actions.ADD_CONTACT:
       return {
         id: action.id,
-        ...action.data
+        picture: 'https://placehold.it/200/f7f7f7/424242/?text=Photo',
+        ...action.data,
       }
 
     default:
@@ -23,10 +24,7 @@ export default function contacts(state = data, action) {
   switch (action.type) {
 
     case actions.ADD_CONTACT:
-      return [
-        ...state,
-        contact(undefined, action)
-      ];
+      return [...state, contact(undefined, action)];
 
     case actions.EDIT_CONTACT:
       return state.map((contact) => {
@@ -37,7 +35,6 @@ export default function contacts(state = data, action) {
       });
 
     case actions.DELETE_CONTACT:
-      console.log(action);
       return state.filter((contact) => contact.id !== action.id);
 
     default:
