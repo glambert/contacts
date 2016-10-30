@@ -24,7 +24,7 @@ Returns a list of all available contacts:
     "phone (home)": "514-555-5555",
     "phone (work)": "514-555-5555",
     "email": "glambertmtl@gmail.com",
-    "picture": "http://placehold.it/200/f7f7f7/424242/?text=Photo",
+    "picture": "https://placehold.it/200/f7f7f7/424242/?text=Photo",
     "note": "Building the Web since 1996"
   },
   ...
@@ -44,7 +44,7 @@ Returns a contact by ID:
   "phone (home)": "514-555-5555",
   "phone (work)": "514-555-5555",
   "email": "glambertmtl@gmail.com",
-  "picture": "http://placehold.it/200/f7f7f7/424242/?text=Photo",
+  "picture": "https://placehold.it/200/f7f7f7/424242/?text=Photo",
   "note": "Building the Web since 1996"
 }
 ```
