@@ -3,35 +3,35 @@
     "browsers": ["last 2 versions", "ie >= 10"]
   },
   "browsersync": {
-    "baseDir": "./public/",
+    "baseDir": "./",
     "files": [
-      "public/**/*.html",
-      "public/assets/css/*.css",
-      "public/assets/img/**/*",
-      "public/assets/vendor/**/*"
+      "*.html",
+      "dist/css/*.css",
+      "dist/img/**/*",
+      "dist/vendor/**/*"
     ]
   },
   "minifycss": {
-    "src": "public/assets/css/**/!(*.min).css",
-    "dest": "public/assets/css"
+    "src": "dist/css/**/!(*.min).css",
+    "dest": "dist/css"
   },
   "revision": {
     "src": [
-      "public/assets/css/*.css",
-      "public/assets/js/**.*"
+      "dist/css/*.css",
+      "dist/js/**.*"
     ],
-    "base": "../public/assets",
-    "dest": "public/assets/build"
+    "base": "../dist/assets",
+    "dest": "dist/build"
   },
   "sass": {
     "src": "src/css/*.scss",
-    "dest": "public/assets/css"
+    "dest": "dist/css"
   },
   "webpack": {
     "filename": "index.js",
     "root": "src/js",
     "entry": "src/js/index",
-    "output": "public/assets/js",
+    "output": "dist/js",
     "publicPath": "assets/js/"
   },
   "watch": {

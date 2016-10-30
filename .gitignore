@@ -9,7 +9,4 @@ Thumbs.db
 
 # Front End ignores
 node_modules
-public/assets/build/
-public/assets/css/
-public/assets/js/
 npm-debug.log

@@ -130,7 +130,7 @@ npm run build
 - [ ] Fine-tune UI responsiveness & UX
 - [ ] Add inline form validation
 - [ ] Use CSS modules to encapsulate components-specific styles
-- [ ] Add routing for direct access to contacts
+- [ ] Add routing with HTML5 history/state
 - [ ] State connect optimization
 - [ ] Save app state in storage
 - [ ] Add state transitions & animations
