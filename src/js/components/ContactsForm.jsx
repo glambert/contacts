@@ -34,7 +34,7 @@ export default class ContactsForm extends Component {
       <form className="u-p-3" onSubmit={this.handleSubmit} ref={(form) => this.form = form}>
         <div className="row u-mb-2">
           <div className="col-1-5">
-            <img className="u-img-circle" src="http://placehold.it/200/f7f7f7/424242/?text=Photo"
+            <img className="u-img-circle" src="https://placehold.it/200/f7f7f7/424242/?text=Photo"
               alt="Name" width="100" />
           </div>
           <div className="col-3-5 u-pt-2">
