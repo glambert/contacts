@@ -4,21 +4,28 @@ import serialize from 'form-serialize';
 export default class ContactsForm extends Component {
 
   static propTypes = {
-    status: PropTypes.string,
-    contact: PropTypes.object,
-    onSave: PropTypes.func,
-    onEdit: PropTypes.func,
-    onCancel: PropTypes.func,
+    status: PropTypes.string.isRequired,
+    contact: PropTypes.object.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
   }
 
   handleSubmit = (event) => {
+    const { status, contact, onSave, onEdit } = this.props;
+    const data = serialize(this.form, { hash: true });
     event.preventDefault();
-    this.props.onSave(serialize(this.form, { hash: true }));
+    if (status === 'edit') {
+      onEdit(contact.id, data);
+    } else {
+      onSave(data);
+    }
   }
 
   handleCancelClick = (event) => {
+    const { contact, onCancel } = this.props;
     event.preventDefault();
-    console.log('Cancel click');
+    onCancel(contact.id);
   }
 
   render() {
@@ -31,38 +38,45 @@ export default class ContactsForm extends Component {
               alt="Name" width="100" />
           </div>
           <div className="col-3-5 u-pt-2">
-            <input className="form-control u-mb-2" type="text" name="name" placeholder="Name" autoFocus required />
-            <input className="form-control" type="text" name="title" placeholder="Title" />
+            <input className="form-control u-mb-2" type="text" name="name" placeholder="Name"
+              defaultValue={contact.name} autoFocus required />
+            <input className="form-control" type="text" name="title" placeholder="Title"
+              defaultValue={contact.title} />
           </div>
         </div>
         <div className="row u-mb-2">
           <label htmlFor="addressId" className="col-1-5 u-text-right u-pt-1">Address</label>
           <div className="col-3-5">
-            <input className="form-control" type="text" id="addressId" name="address" />
+            <input className="form-control" type="text" id="addressId" name="address"
+              defaultValue={contact.address} />
           </div>
         </div>
         <div className="row u-mb-2">
           <label htmlFor="phoneHomeId" className="col-1-5 u-text-right u-pt-1">Phone (home)</label>
           <div className="col-3-5">
-            <input className="form-control" type="text" id="phoneHomeId" name="phoneHome" />
+            <input className="form-control" type="text" id="phoneHomeId" name="phoneHome"
+              defaultValue={contact.phoneHome} />
           </div>
         </div>
         <div className="row u-mb-2">
           <label htmlFor="phoneWorkId" className="col-1-5 u-text-right u-pt-1">Phone (work)</label>
           <div className="col-3-5">
-            <input className="form-control" type="text" id="phoneWorkId" name="phoneWork" />
+            <input className="form-control" type="text" id="phoneWorkId" name="phoneWork"
+              defaultValue={contact.phoneWork} />
           </div>
         </div>
         <div className="row u-mb-2">
           <label htmlFor="emailId" className="col-1-5 u-text-right u-pt-1">Email</label>
           <div className="col-3-5">
-            <input className="form-control" type="email" id="emailId" name="email" />
+            <input className="form-control" type="email" id="emailId" name="email"
+              defaultValue={contact.email} />
           </div>
         </div>
         <div className="row u-mb-2">
           <label htmlFor="noteId" className="col-1-5 u-text-right u-pt-1">Note</label>
           <div className="col-3-5">
-            <textarea className="form-control" id="noteId" name="note"></textarea>
+            <textarea className="form-control" id="noteId" name="note"
+              defaultValue={contact.note}></textarea>
           </div>
         </div>
         <div className="u-pt-1 u-text-center">
@@ -70,7 +84,7 @@ export default class ContactsForm extends Component {
             <a className="btn btn--default" onClick={this.handleCancelClick}>Cancel</a>
           }
           <button type="submit" className="btn btn--primary">
-            {status === 'create' ? 'Save' : 'Edit'}
+            {status === 'create' ? 'Add' : 'Save'}
           </button>
         </div>
       </form>

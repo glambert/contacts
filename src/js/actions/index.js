@@ -29,6 +29,15 @@ export function addContact(data, id) {
   }
 }
 
+// Thunk action creator, that edits contact and goes in view mode for it after
+export const MODIFY_CONTACT = 'MODIFY_CONTACT';
+export function modifyContact(id, data) {
+  return (dispatch, getState) => {
+    dispatch(editContact(id, data));
+    dispatch(setMode('view', id));
+  }
+}
+
 export const EDIT_CONTACT = 'EDIT_CONTACT';
 export function editContact(id, data) {
   return {

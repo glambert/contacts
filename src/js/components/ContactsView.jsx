@@ -48,10 +48,15 @@ const ContactsView = ({ contact, onEditClick, onDeleteClick }) => {
         </div>
       </div>
       <div className="u-pt-3 u-text-center">
-        <button className="btn btn--default u-text-n1"
-          onClick={(id) => onEditClick(contact.id)}>Edit</button>
-        <button className="btn btn--default u-text-n1"
-          onClick={(id) => onDeleteClick(contact.id)}>Delete</button>
+        <button className="btn btn--primary u-text-n1"
+          onClick={(event) => onEditClick(contact.id)}>Edit</button>
+        <a href="" className="btn u-text-n1"
+          onClick={(event) => {
+            event.preventDefault();
+            if (window.confirm('Are you sure you want to delete this contact?')) {
+              onDeleteClick(contact.id);
+            }
+          }}>Delete</a>
       </div>
     </div>
   )

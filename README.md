@@ -126,6 +126,7 @@ npm run build
 
 ### Next steps
 
+- [ ] Implement photo upload
 - [ ] Use real API, consider all possible cases (errors, timeouts etc.)
 - [ ] Fine-tune UI responsiveness & UX
 - [ ] Add inline form validation

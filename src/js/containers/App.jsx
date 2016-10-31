@@ -16,7 +16,8 @@ class App extends Component {
       onContactView,
       onContactEdit,
       onContactDelete,
-      onContactSave
+      onContactSave,
+      onContactModify
     } = this.props;
     return (
       <div className="row">
@@ -38,10 +39,10 @@ class App extends Component {
                 onDeleteClick={(id) => onContactDelete(id)} />
             : <ContactsForm
                 status={mode.status}
-                contact={contacts.filter((contact) => contact.id === mode.id)[0]}
+                contact={contacts.filter((contact) => contact.id === mode.id)[0] || {}}
                 onSave={(data) => onContactSave(data)}
-                onEdit={() => { console.log('Submit'); }}
-                onCancel={() => { console.log('Cancel'); }} />
+                onCancel={(id) => onContactView(id)}
+                onEdit={(id ,data) => onContactModify(id, data)} />
           }
         </div>
       </div>
@@ -63,7 +64,8 @@ const mapDispatchToProps = (dispatch) => {
     onContactView: (id) => dispatch(actions.setMode('view', id)),
     onContactEdit: (id) => dispatch(actions.setMode('edit', id)),
     onContactDelete: (id) => dispatch(actions.deleteContact(id)),
-    onContactSave: (data) => dispatch(actions.createContact(data))
+    onContactSave: (data) => dispatch(actions.createContact(data)),
+    onContactModify: (id, data) => dispatch(actions.modifyContact(id, data)),
   }
 }
 
