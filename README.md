@@ -21,8 +21,8 @@ Returns a list of all available contacts:
     "name": "Guillaume Lambert",
     "title": "Senior Front-End Developer",
     "address": "2675 Basile-Routhier, Laval, QC. Canada",
-    "phone (home)": "514-555-5555",
-    "phone (work)": "514-555-5555",
+    "phoneHome": "514-555-5555",
+    "phoneWork": "514-555-5555",
     "email": "glambertmtl@gmail.com",
     "picture": "https://placehold.it/200/f7f7f7/424242/?text=Photo",
     "note": "Building the Web since 1996"
@@ -41,8 +41,8 @@ Returns a contact by ID:
   "name": "Guillaume Lambert",
   "title": "Senior Front-End Developer",
   "address": "2675 Basile-Routhier, Laval, QC. Canada",
-  "phone (home)": "514-555-5555",
-  "phone (work)": "514-555-5555",
+  "phoneHome": "514-555-5555",
+  "phoneWork": "514-555-5555",
   "email": "glambertmtl@gmail.com",
   "picture": "https://placehold.it/200/f7f7f7/424242/?text=Photo",
   "note": "Building the Web since 1996"
