@@ -60,7 +60,7 @@
     "susy": "2.2.12",
     "url-loader": "0.5.7",
     "webpack": "1.13.3",
-    "webpack-dev-middleware": "1.8.4",
+    "webpack-dev-middleware": "5.3.4",
     "webpack-hot-middleware": "2.13.0",
     "webpack-stream": "3.2.0",
     "yargs": "6.3.0"
